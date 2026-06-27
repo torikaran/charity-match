@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="モンスターチャリティーマッチの開催情報と、試合前の応援投票ページです。">
+    <title>モンスターチャリティーマッチ | 事前応援投票</title>
+    <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="./styles.css?v=20260627-support-meter-simple">
+  </head>
+  <body>
+    <header class="site-header" id="top">
+      <nav class="topbar" aria-label="サイト">
+        <a class="brand" href="#match" aria-label="チャリティーマッチ 開催情報">
+          <span class="brand-main">CHARITY MATCH</span>
+          <span class="brand-sub">応援がそのまま寄付になる</span>
+        </a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="section section-match section-first" id="match" aria-labelledby="match-title">
+        <div class="section-inner match-layout">
+          <div class="match-poster">
+            <img src="./img/match.jpg" alt="GENGEN 対 エンター豊田 生配信対決決定" loading="eager">
+          </div>
+
+          <div class="match-copy">
+            <p class="stamp stamp-red">企画概要</p>
+            <h1 id="match-title"><span>チャリティーマッチ</span><span>生配信対決！</span></h1>
+            <p class="match-lead">
+GENGENとエンター豊田によるチャリティーマッチの開催が決定！
+<br />
+それぞれが応援する団体への寄付をかけて、マッチプレー形式のゴルフ対決に挑みます。
+
+<br />
+生配信では応援コメントや投げ銭を通じて、視聴者の皆さまと一緒に対決を盛り上げます。
+
+            </p>
+
+            <dl class="match-details">
+              <div>
+                <dt>開催日時</dt>
+                <dd>7月27日 10:00開始予定（仮）</dd>
+              </div>
+              <div>
+                <dt>対戦形式</dt>
+                <dd>マッチプレー</dd>
+              </div>
+              <div>
+                <dt>チャリティ</dt>
+                <dd>生配信で集まった投げ銭は決済手数料等を除き勝利陣営が応援する団体へ手数料を除いて全額寄付</dd>
+              </div>
+              <div>
+                <dt>配信予定</dt>
+                <dd>
+                  <span>GENGEN：TikTok</span>
+                  <span>エンター豊田：YouTube</span>
+                </dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-vote" id="vote" aria-labelledby="vote-title">
+        <div class="section-inner">
+          <div class="vote-head">
+            <div>
+              <p class="stamp stamp-red">事前応援投票</p>
+              <h2 id="vote-title"><span>あなたはどちらを応援する？</span></h2>
+            </div>
+            <p>
+この投票は当日の勝負を盛り上げるための事前応援企画です。<br />
+より多くの応援を集めた陣営には試合中に使える「応援カード」を付与。<br />
+あなたの一票が試合の流れを動かすかも…？<br />
+対決当日まで1日1回投票できます。是非応援投票お願い致します。
+            </p>
+          </div>
+
+          <p class="vote-alert" id="voteStatus" aria-live="polite"></p>
+
+          <div class="support-meter" aria-live="polite">
+            <div class="support-meter-head">
+              <p class="support-meter-label">現在の応援総数</p>
+              <p class="support-meter-count"><span id="supportTotal">--</span><small>票</small></p>
+            </div>
+            <div class="support-meter-bar" aria-hidden="true">
+              <span id="supportMeterFill"></span>
+            </div>
+          </div>
+
+          <div class="team-grid">
+            <article class="team-panel team-panel-red">
+              <div class="team-photo">
+                <img src="./img/gengen.jpeg" alt="GENGEN" loading="eager">
+              </div>
+              <div class="team-copy">
+                <h3>GENGEN</h3>
+                <p class="team-theme">児童養護施設チャリティ</p>
+                <div class="social-links" aria-label="GENGENのSNSリンク">
+                  <a class="social-link social-instagram" href="https://www.instagram.com/gengen_ch/" target="_blank" rel="noopener noreferrer" aria-label="GENGEN Instagram">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <rect x="4" y="4" width="16" height="16" rx="4"></rect>
+                      <circle cx="12" cy="12" r="3.4"></circle>
+                      <circle cx="17" cy="7" r="1"></circle>
+                    </svg>
+                  </a>
+                  <a class="social-link social-youtube" href="https://www.youtube.com/channel/UCIDr8d_seHp0PH_LXakZ3DA" target="_blank" rel="noopener noreferrer" aria-label="GENGEN YouTube">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path class="youtube-shape" d="M4.5 8.2c.2-1.2 1.1-2.1 2.3-2.3C8.5 5.6 12 5.6 12 5.6s3.5 0 5.2.3c1.2.2 2.1 1.1 2.3 2.3.3 1.3.3 3.8.3 3.8s0 2.5-.3 3.8c-.2 1.2-1.1 2.1-2.3 2.3-1.7.3-5.2.3-5.2.3s-3.5 0-5.2-.3c-1.2-.2-2.1-1.1-2.3-2.3-.3-1.3-.3-3.8-.3-3.8s0-2.5.3-3.8Z"></path>
+                      <path class="youtube-play" d="m10.2 9.3 4.6 2.7-4.6 2.7V9.3Z"></path>
+                    </svg>
+                  </a>
+                  <a class="social-link social-tiktok" href="https://www.tiktok.com/@gengen.ch" target="_blank" rel="noopener noreferrer" aria-label="GENGEN TikTok">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M14 4v9.2a4.2 4.2 0 1 1-3.7-4.2v2.8a1.5 1.5 0 1 0 1.1 1.4V4h2.6c.4 2.2 1.8 3.6 4 4v2.8c-1.5-.1-2.8-.6-4-1.5Z"></path>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+              <p class="team-profile">
+                シミュレーションゴルフ日本一の実績を持つゴルフクリエイター。
+<br />
+YouTubeやSNSでゴルフの楽しさを発信する一方、
+児童養護施設へのチャリティ活動やスナッグゴルフ体験を通じて、
+子どもたちにゴルフの魅力を届ける活動にも取り組んでいます。
+              </p>
+              <button
+                class="vote-button vote-button-red"
+                type="button"
+                data-submit-value="児童養護施設チャリティ"
+                data-visible-team="GENGEN陣営"
+              >
+                GENGEN陣営を応援する
+              </button>
+            </article>
+
+            <article class="team-panel team-panel-blue">
+              <div class="team-photo">
+                <img src="./img/enter.jpg" alt="エンター豊田" loading="eager">
+              </div>
+              <div class="team-copy">
+                <h3>エンター豊田</h3>
+                <p class="team-theme">犬猫チャリティ</p>
+                <div class="social-links" aria-label="エンター豊田のSNSリンク">
+                  <a class="social-link social-instagram" href="https://www.instagram.com/tatsuhiro.toyoda/" target="_blank" rel="noopener noreferrer" aria-label="エンター豊田 Instagram">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <rect x="4" y="4" width="16" height="16" rx="4"></rect>
+                      <circle cx="12" cy="12" r="3.4"></circle>
+                      <circle cx="17" cy="7" r="1"></circle>
+                    </svg>
+                  </a>
+                  <a class="social-link social-youtube" href="https://www.youtube.com/channel/UCpYRzJU9HP56UZ__I92OkWQ" target="_blank" rel="noopener noreferrer" aria-label="エンター豊田 YouTube">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path class="youtube-shape" d="M4.5 8.2c.2-1.2 1.1-2.1 2.3-2.3C8.5 5.6 12 5.6 12 5.6s3.5 0 5.2.3c1.2.2 2.1 1.1 2.3 2.3.3 1.3.3 3.8.3 3.8s0 2.5-.3 3.8c-.2 1.2-1.1 2.1-2.3 2.3-1.7.3-5.2.3-5.2.3s-3.5 0-5.2-.3c-1.2-.2-2.1-1.1-2.3-2.3-.3-1.3-.3-3.8-.3-3.8s0-2.5.3-3.8Z"></path>
+                      <path class="youtube-play" d="m10.2 9.3 4.6 2.7-4.6 2.7V9.3Z"></path>
+                    </svg>
+                  </a>
+                  <a class="social-link social-tiktok" href="https://www.tiktok.com/@entoyoyo" target="_blank" rel="noopener noreferrer" aria-label="エンター豊田 TikTok">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M14 4v9.2a4.2 4.2 0 1 1-3.7-4.2v2.8a1.5 1.5 0 1 0 1.1 1.4V4h2.6c.4 2.2 1.8 3.6 4 4v2.8c-1.5-.1-2.8-.6-4-1.5Z"></path>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+              <p class="team-profile">
+                ドラコン日本記録479ヤード保持者。 
+<br />
+YouTubeでの発信やイベント出演を通じて、
+ゴルフの迫力と楽しさを届けています。
+<br />
+今回は保護犬・保護猫の保護活動を応援するテーマで参加します。
+              </p>
+              <button
+                class="vote-button vote-button-blue"
+                type="button"
+                data-submit-value="犬猫チャリティ"
+                data-visible-team="エンター豊田陣営"
+              >
+                エンター豊田陣営を応援する
+              </button>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-short" id="short" aria-labelledby="short-title">
+        <div class="section-inner short-layout">
+          <div class="short-copy">
+            <p class="stamp stamp-red">予告ショート公開中</p>
+            <h2 id="short-title">対決前にショート動画をチェック</h2>
+            <p>
+              本番前の見どころや、二人の意気込みをショート動画で公開中。まずは動画で両陣営の空気感をチェック。<Br />
+応援したい陣営が決まったら、そのまま事前応援投票へ。
+            </p>
+          </div>
+
+          <div class="short-video" aria-label="予告ショート動画">
+<iframe width="487" height="866" src="https://www.youtube.com/embed/c9ZmBH88tSc" title="キャリー300Y 飛ばして〇〇" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-live" id="live" aria-labelledby="live-title">
+        <div class="section-inner live-strip">
+          <p class="stamp stamp-red">生配信情報</p>
+          <div>
+            <h2 id="live-title">本番は生配信で</h2>
+            <p>
+              本番ではチャリティ対決の模様に加えて、事前応援投票の集計も紹介予定です。配信URLが決まり次第、ここから案内します。
+            </p>
+          </div>
+          <div class="live-actions" aria-label="配信URL">
+            <!-- URL決定後は href を差し替えて、is-disabled / aria-disabled / tabindex を削除 -->
+            <a class="secondary-button live-url-button live-url-button-red is-disabled" href="#" aria-disabled="true" tabindex="-1">
+              <span>GENGEN 配信URL</span>
+              <strong>準備中</strong>
+            </a>
+            <a class="secondary-button live-url-button live-url-button-blue is-disabled" href="#" aria-disabled="true" tabindex="-1">
+              <span>エンター豊田 配信URL</span>
+              <strong>準備中</strong>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-sponsor" id="sponsor" aria-labelledby="sponsor-title">
+        <div class="section-inner">
+          <div class="sponsor-head">
+            <p class="stamp stamp-red">協賛企業</p>
+            <h2 id="sponsor-title">スポンサー様のご紹介</h2>
+            <p>本企画を支えてくださるスポンサー様のご紹介です。</p>
+          </div>
+
+          <a
+            class="sponsor-feature"
+            href="https://global-one-holdings.biz/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="株式会社グローバル・ホールディングス 公式サイト"
+          >
+            <img
+              src="./img/global_holdings_yokonaga_16x9.jpg"
+              alt="株式会社グローバル・ホールディングス"
+              loading="lazy"
+            >
+          </a>
+          <div class="sponsor-link-wrap">
+            <a
+              class="sponsor-site-link"
+              href="https://global-one-holdings.biz/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              公式ホームページはこちら
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>&copy; 2026 CHARITY MATCH. All Rights Reserved.</p>
+    </footer>
+
+    <div class="modal" id="thanksModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" hidden>
+      <div class="modal-backdrop" data-close-modal></div>
+      <div class="modal-panel">
+        <p class="stamp stamp-red">投票完了</p>
+        <h2 id="modalTitle">応援投票ありがとうございました！</h2>
+        <p>
+          配信当日まで1日1回投票できます。7月27日の生配信をお楽しみに！
+        </p>
+        <button class="main-button modal-close" type="button" data-close-modal>閉じる</button>
+      </div>
+    </div>
+
+    <script src="./script.js?v=20260627-release-check"></script>
+  </body>
+</html>
