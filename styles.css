@@ -753,6 +753,12 @@ button {
   font-weight: 800;
 }
 
+.vote-note {
+  color: var(--muted);
+  font-size: 0.86em;
+  font-weight: 800;
+}
+
 .vote-alert {
   display: none;
   margin: 0 0 1rem;
