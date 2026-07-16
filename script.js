@@ -1,4 +1,4 @@
-const DEBUG_ALLOW_UNLIMITED_VOTES = false;
+const DEBUG_ALLOW_UNLIMITED_VOTES = true;
 
 const FORM_CONFIG = {
   actionUrl: "https://docs.google.com/forms/d/e/1FAIpQLSeTw6juBFX6O8Gj36nEBGT4qZr0umN68npEWk-_VunS1tfklw/formResponse",
@@ -8,8 +8,20 @@ const FORM_CONFIG = {
 const PUBLIC_VOTE_CSV_URL =
   "https://docs.google.com/spreadsheets/d/19ysacW9BHIClnXLdcB1YG69bDibNl-B8rN6uZMNeER8/gviz/tq?tqx=out:csv&gid=758188382";
 
-const DEADLINE = new Date("2026-07-26T23:59:59+09:00");
+// プレゼント応募用Googleフォーム。
+// ローカルの ?mockSubmit=1 ではGoogleフォームへの送信をスキップして動作確認できる。
+const ENTRY_FORM_CONFIG = {
+  actionUrl: "https://docs.google.com/forms/d/e/1FAIpQLSeJ8Qd18ekkqsNROdhli-WHD9_sTyimTqmPPbNrIQkL_x-8Ng/formResponse",
+  emailEntryId: "entry.433332909",
+  nicknameEntryId: "entry.653911767",
+  teamEntryId: "entry.1319819739",
+  gengenTikTokEntryId: "entry.1222429065",
+  toyodaYoutubeEntryId: "entry.1878028566",
+};
+
+const DEADLINE = new Date("2026-07-27T12:00:00+09:00");
 const STORAGE_KEY = "monster-charity-match:last-vote-date";
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const JST_DATE_FORMATTER = new Intl.DateTimeFormat("en-CA", {
   timeZone: "Asia/Tokyo",
   year: "numeric",
@@ -22,6 +34,11 @@ const voteStatus = document.querySelector("#voteStatus");
 const supportTotal = document.querySelector("#supportTotal");
 const supportMeterFill = document.querySelector("#supportMeterFill");
 const modal = document.querySelector("#thanksModal");
+const modalStamp = document.querySelector("#modalStamp");
+const modalTitle = document.querySelector("#modalTitle");
+const modalLead = document.querySelector("#modalLead");
+const entryForm = document.querySelector("#entryForm");
+const entryFormStatus = document.querySelector("#entryFormStatus");
 let lastFocusedElement = null;
 
 const params = new URLSearchParams(window.location.search);
@@ -219,6 +236,142 @@ async function submitVote(value) {
   });
 }
 
+function setEntryFormStatus(message, isError = false) {
+  if (!entryFormStatus) {
+    return;
+  }
+
+  entryFormStatus.textContent = message;
+  entryFormStatus.classList.toggle("is-visible", Boolean(message));
+  entryFormStatus.classList.toggle("is-error", Boolean(message) && isError);
+}
+
+function setEntryFormDisabled(disabled) {
+  if (!entryForm) {
+    return;
+  }
+
+  entryForm.querySelectorAll("input, button").forEach((element) => {
+    element.disabled = disabled;
+  });
+}
+
+function isEntryConfigReady() {
+  return Boolean(
+    ENTRY_FORM_CONFIG.actionUrl &&
+      ENTRY_FORM_CONFIG.emailEntryId &&
+      ENTRY_FORM_CONFIG.nicknameEntryId &&
+      ENTRY_FORM_CONFIG.teamEntryId &&
+      ENTRY_FORM_CONFIG.gengenTikTokEntryId &&
+      ENTRY_FORM_CONFIG.toyodaYoutubeEntryId
+  );
+}
+
+function configureModal(team) {
+  const closed = isPastDeadline();
+
+  if (modalStamp) modalStamp.textContent = "投票完了";
+  if (modalTitle) modalTitle.textContent = "応援投票ありがとうございました！";
+  if (modalLead) {
+    modalLead.textContent = closed
+      ? "プレゼント抽選の応募受付は終了しました。"
+      : "つづけて今日のプレゼント抽選に応募できます。毎日応募で当選確率アップ！";
+  }
+
+  if (entryForm) {
+    entryForm.hidden = closed;
+
+    if (!entryForm.hidden) {
+      setEntryFormDisabled(false);
+      setEntryFormStatus("");
+
+      if (team) {
+        const radio = entryForm.querySelector(`input[name="entryTeam"][value="${team}"]`);
+        if (radio) {
+          radio.checked = true;
+        }
+      }
+    }
+  }
+}
+
+async function submitEntry({ email, nickname, team, channels }) {
+  if (isLocalMockSubmit) {
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append(ENTRY_FORM_CONFIG.emailEntryId, email);
+  formData.append(ENTRY_FORM_CONFIG.nicknameEntryId, nickname);
+  formData.append(ENTRY_FORM_CONFIG.teamEntryId, team);
+  if (channels.includes("gengen_tiktok")) {
+    formData.append(ENTRY_FORM_CONFIG.gengenTikTokEntryId, "1");
+  }
+  if (channels.includes("toyoda_youtube")) {
+    formData.append(ENTRY_FORM_CONFIG.toyodaYoutubeEntryId, "1");
+  }
+
+  await fetch(ENTRY_FORM_CONFIG.actionUrl, {
+    method: "POST",
+    mode: "no-cors",
+    body: formData,
+  });
+}
+
+async function handleEntrySubmit(event) {
+  event.preventDefault();
+
+  if (isPastDeadline()) {
+    return;
+  }
+
+  const email = entryForm.querySelector("#entryEmail").value.trim();
+  const nickname = entryForm.querySelector("#entryNickname").value.trim();
+  const team = entryForm.querySelector('input[name="entryTeam"]:checked')?.value;
+  const channels = [...entryForm.querySelectorAll('input[name="entryChannel"]:checked')].map(
+    (input) => input.value
+  );
+
+  if (!email || !EMAIL_PATTERN.test(email)) {
+    setEntryFormStatus("メールアドレスの形式をご確認ください。", true);
+    return;
+  }
+
+  if (!nickname) {
+    setEntryFormStatus("ニックネームを入力してください。", true);
+    return;
+  }
+
+  if (!team) {
+    setEntryFormStatus("応援した陣営を選択してください。", true);
+    return;
+  }
+
+  if (!isEntryConfigReady() && !isLocalMockSubmit) {
+    setEntryFormStatus("応募フォームは現在準備中です。公開までもうしばらくお待ちください。", true);
+    return;
+  }
+
+  const submitButton = entryForm.querySelector(".entry-submit");
+  const originalText = submitButton.textContent;
+  setEntryFormDisabled(true);
+  submitButton.textContent = "送信中";
+  setEntryFormStatus("");
+
+  try {
+    await submitEntry({ email, nickname, team, channels });
+    entryForm.hidden = true;
+    if (modalLead) {
+      modalLead.textContent = "本日の応募が完了しました！明日も投票＆応募で、さらに当選確率アップ！";
+    }
+  } catch {
+    setEntryFormStatus("送信に失敗しました。通信環境をご確認のうえ、もう一度お試しください。", true);
+    setEntryFormDisabled(false);
+  } finally {
+    submitButton.textContent = originalText;
+  }
+}
+
 function openModal() {
   if (!modal) {
     return;
@@ -227,7 +380,13 @@ function openModal() {
   lastFocusedElement = document.activeElement;
   modal.hidden = false;
   document.body.style.overflow = "hidden";
-  modal.querySelector("button[data-close-modal]")?.focus();
+  modal.querySelector(".modal-panel").scrollTop = 0;
+
+  if (entryForm && !entryForm.hidden) {
+    entryForm.querySelector("#entryEmail")?.focus();
+  } else {
+    modal.querySelector("button[data-close-modal]")?.focus();
+  }
 }
 
 function closeModal() {
@@ -268,6 +427,7 @@ async function handleVote(event) {
     await submitVote(submittedValue);
     writeLastVoteDate();
     refreshSupportMeter();
+    configureModal(button.dataset.visibleTeam);
     openModal();
   } catch {
     setStatus("送信に失敗しました。通信環境を確認して、もう一度お試しください。");
@@ -281,6 +441,8 @@ async function handleVote(event) {
 voteButtons.forEach((button) => {
   button.addEventListener("click", handleVote);
 });
+
+entryForm?.addEventListener("submit", handleEntrySubmit);
 
 modal?.addEventListener("click", (event) => {
   if (event.target.matches("[data-close-modal]")) {

@@ -555,6 +555,8 @@ button {
 .section-heading h1,
 .match-copy h1,
 .vote-head h2,
+.rules-copy h2,
+.entry-head h2,
 .short-copy h2,
 .live-strip h2,
 .sponsor-head h2 {
@@ -653,6 +655,10 @@ button {
 .vote-head h2 {
   word-break: keep-all;
   overflow-wrap: anywhere;
+}
+
+.vote-head h2 span {
+  display: block;
 }
 
 .vote-head p:last-child,
@@ -757,6 +763,264 @@ button {
   color: var(--muted);
   font-size: 0.86em;
   font-weight: 800;
+}
+
+.rules-copy .stamp {
+  margin-bottom: 1.1rem;
+}
+
+.rules-copy p {
+  color: rgba(242, 238, 229, 0.88);
+  font-size: clamp(1rem, 1.25vw, 1.18rem);
+  line-height: 1.78;
+}
+
+.warning-title {
+  margin: 0 0 0.6rem;
+  color: var(--red);
+  font-family: var(--jp-heavy-font);
+  font-size: clamp(1.3rem, 2.2vw, 1.7rem);
+  font-weight: 900;
+  line-height: 1.35;
+}
+
+.warning-strip p:not(.warning-title) {
+  margin: 0;
+  color: var(--paper);
+  font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", system-ui, sans-serif;
+  font-weight: 800;
+  line-height: 1.7;
+}
+
+.penalty-list {
+  display: grid;
+  gap: 0.6rem;
+  margin: 1rem 0 0;
+}
+
+.penalty-list div {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.75rem;
+}
+
+.penalty-list dt {
+  padding: 0.16rem 0.5rem;
+  border: 2px solid var(--cyan);
+  background: var(--black);
+  color: var(--cyan);
+  font-family: var(--jp-heavy-font);
+  font-weight: 900;
+  line-height: 1.3;
+}
+
+.penalty-list dd {
+  margin: 0;
+  color: var(--paper);
+  font-weight: 900;
+}
+
+.section-entry {
+  background: transparent;
+}
+
+.entry-head {
+  display: grid;
+  gap: 0.95rem;
+  margin-bottom: 1.9rem;
+}
+
+.entry-head .stamp {
+  margin: 0;
+}
+
+.entry-head p:not(.stamp) {
+  margin: 0;
+  max-width: 46rem;
+  color: rgba(242, 238, 229, 0.88);
+  font-size: clamp(1rem, 1.25vw, 1.18rem);
+  font-weight: 800;
+  line-height: 1.78;
+}
+
+.section-entry .rule-flow {
+  margin: 0 0 1.9rem;
+}
+
+.entry-form {
+  display: grid;
+  gap: 1.25rem;
+  width: min(46rem, 100%);
+  padding: clamp(1.1rem, 2.4vw, 1.7rem);
+  border: 4px solid rgba(242, 238, 229, 0.92);
+  background: rgba(5, 5, 5, 0.78);
+  box-shadow:
+    7px 7px 0 rgba(239, 43, 36, 0.34),
+    -7px -7px 0 rgba(18, 200, 255, 0.22);
+}
+
+.entry-form fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.entry-field label,
+.entry-field legend {
+  display: block;
+  margin: 0 0 0.5rem;
+  padding: 0;
+  color: var(--paper);
+  font-family: var(--jp-heavy-font);
+  font-weight: 900;
+  line-height: 1.4;
+}
+
+.entry-field input[type="email"],
+.entry-field input[type="text"] {
+  width: 100%;
+  padding: 0.72rem 0.85rem;
+  border: 3px solid rgba(242, 238, 229, 0.85);
+  border-radius: 0;
+  background: #0b0a0a;
+  color: var(--paper);
+  font: inherit;
+  font-weight: 800;
+}
+
+.entry-field input[type="email"]::placeholder,
+.entry-field input[type="text"]::placeholder {
+  color: rgba(199, 192, 179, 0.55);
+}
+
+.entry-field input:focus-visible {
+  outline: 4px solid var(--cyan);
+  outline-offset: 2px;
+}
+
+.entry-team label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0 1.3rem 0 0;
+  color: var(--paper);
+  font-weight: 900;
+}
+
+.entry-checks {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.entry-check {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.55rem;
+  color: var(--paper);
+  font-weight: 800;
+}
+
+.entry-check a {
+  padding: 0.05rem 0.45rem;
+  border: 2px solid var(--cyan);
+  color: var(--cyan);
+  font-size: 0.82rem;
+  font-weight: 900;
+}
+
+.entry-check a:hover {
+  background: var(--cyan);
+  color: var(--black);
+}
+
+.entry-form input[type="radio"],
+.entry-form input[type="checkbox"] {
+  width: 1.25rem;
+  height: 1.25rem;
+  accent-color: var(--red);
+}
+
+.entry-note {
+  margin: 0;
+  color: var(--muted);
+  font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", system-ui, sans-serif;
+  font-size: 0.86rem;
+  font-weight: 700;
+  line-height: 1.7;
+}
+
+.entry-submit {
+  width: 100%;
+  min-height: 4.4rem;
+  font-size: clamp(1.1rem, 1.8vw, 1.3rem);
+}
+
+.entry-submit:disabled {
+  cursor: not-allowed;
+  filter: grayscale(0.88);
+  opacity: 0.62;
+  transform: none;
+}
+
+.entry-status {
+  display: none;
+  margin: 0;
+  padding: 0.7rem 0.9rem;
+  border: 3px solid var(--paper);
+  background: var(--black);
+  color: var(--paper);
+  font-weight: 900;
+}
+
+.entry-status.is-visible {
+  display: block;
+}
+
+.entry-status.is-error {
+  border-color: var(--red);
+  color: var(--red);
+}
+
+.entry-cta {
+  display: grid;
+  gap: 0.9rem;
+  justify-items: start;
+  width: min(46rem, 100%);
+}
+
+.entry-open {
+  min-height: 4.4rem;
+  padding: 0.9rem 2.2rem;
+  font-size: clamp(1.1rem, 1.8vw, 1.3rem);
+}
+
+.entry-open:disabled {
+  cursor: not-allowed;
+  filter: grayscale(0.88);
+  opacity: 0.62;
+  transform: none;
+}
+
+.entry-form-modal {
+  width: 100%;
+  margin-top: 0.4rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.entry-form-modal[hidden] {
+  display: none;
+}
+
+.modal-close {
+  width: 100%;
+  justify-content: center;
+  margin-top: 0.9rem;
 }
 
 .vote-alert {
@@ -1263,7 +1527,9 @@ button {
 .modal-panel {
   position: relative;
   z-index: 1;
-  width: min(34rem, 100%);
+  width: min(36rem, 100%);
+  max-height: min(88svh, 100%);
+  overflow-y: auto;
   padding: 1.2rem;
   border: 5px solid var(--paper);
   background:
