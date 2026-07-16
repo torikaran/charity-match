@@ -1,4 +1,4 @@
-const DEBUG_ALLOW_UNLIMITED_VOTES = true;
+const DEBUG_ALLOW_UNLIMITED_VOTES = false;
 
 const FORM_CONFIG = {
   actionUrl: "https://docs.google.com/forms/d/e/1FAIpQLSeTw6juBFX6O8Gj36nEBGT4qZr0umN68npEWk-_VunS1tfklw/formResponse",
