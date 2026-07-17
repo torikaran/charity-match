@@ -19,7 +19,7 @@ const ENTRY_FORM_CONFIG = {
   toyodaYoutubeEntryId: "entry.1878028566",
 };
 
-const DEADLINE = new Date("2026-07-27T12:00:00+09:00");
+const DEADLINE = new Date("2026-07-28T12:00:00+09:00");
 const STORAGE_KEY = "monster-charity-match:last-vote-date";
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const JST_DATE_FORMATTER = new Intl.DateTimeFormat("en-CA", {
