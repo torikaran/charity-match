@@ -677,6 +677,58 @@ button {
   line-height: 1.78;
 }
 
+.winner-announcement {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: clamp(0.85rem, 2.5vw, 1.75rem);
+  align-items: center;
+  margin: 0 0 2.65rem;
+  padding: clamp(1rem, 2.4vw, 1.55rem);
+  border: 5px solid var(--paper);
+  background:
+    linear-gradient(115deg, rgba(239, 43, 36, 0.36), rgba(5, 5, 5, 0.94) 43%, rgba(18, 200, 255, 0.24)),
+    var(--black);
+  box-shadow:
+    9px 9px 0 rgba(239, 43, 36, 0.52),
+    -9px -9px 0 rgba(18, 200, 255, 0.3);
+}
+
+.winner-announcement p {
+  margin: 0;
+}
+
+.winner-announcement-kicker {
+  width: fit-content;
+  padding: 0.32rem 0.65rem;
+  border: 3px solid var(--red);
+  background: var(--black);
+  color: var(--paper);
+  font-family: var(--jp-heavy-font);
+  font-size: 0.92rem;
+  font-weight: 900;
+  line-height: 1.2;
+}
+
+.winner-announcement-title {
+  color: var(--paper);
+  font-family: var(--jp-heavy-font);
+  font-size: clamp(1.35rem, 2.7vw, 2.25rem);
+  font-weight: 900;
+  line-height: 1.25;
+  text-shadow: 3px 3px 0 var(--red-dark);
+}
+
+.winner-announcement-time {
+  color: var(--cyan);
+  font-family: Impact, "Arial Black", var(--jp-heavy-font);
+  font-size: clamp(1.55rem, 3.2vw, 2.65rem);
+  font-weight: 900;
+  line-height: 1;
+  text-align: right;
+  white-space: nowrap;
+  text-shadow: 3px 3px 0 var(--cyan-dark);
+}
+
 .short-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(16rem, 24rem);
@@ -1855,6 +1907,32 @@ button {
 
   .match-details dd {
     font-size: 1rem;
+  }
+
+  .winner-announcement {
+    grid-template-columns: 1fr;
+    gap: 0.85rem;
+    margin-bottom: 2.2rem;
+    padding: 1.2rem 1rem;
+    border-width: 4px;
+    text-align: center;
+    box-shadow:
+      6px 6px 0 rgba(239, 43, 36, 0.52),
+      -6px -6px 0 rgba(18, 200, 255, 0.3);
+  }
+
+  .winner-announcement-kicker {
+    justify-self: center;
+  }
+
+  .winner-announcement-title {
+    font-size: clamp(1.45rem, 6.7vw, 2rem);
+  }
+
+  .winner-announcement-time {
+    font-size: clamp(1.75rem, 8vw, 2.4rem);
+    text-align: center;
+    white-space: normal;
   }
 
   .warning-strip,
