@@ -17,12 +17,12 @@
     <meta property="og:locale" content="ja_JP">
     <meta name="twitter:card" content="summary_large_image">
     <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="./styles.css?v=20260728-final-vote">
+    <link rel="stylesheet" href="./styles.css?v=20260728-live-stream">
   </head>
   <body>
     <header class="site-header" id="top">
       <nav class="topbar" aria-label="サイト">
-        <a class="brand" href="#match" aria-label="チャリティーマッチ 開催情報">
+        <a class="brand" href="#live" aria-label="GENGEN・エンター豊田 ライブ配信">
           <span class="brand-main">CHARITY MATCH</span>
           <span class="brand-sub">応援が寄付につながる</span>
         </a>
@@ -30,7 +30,41 @@
     </header>
 
     <main>
-      <section class="section section-match section-first" id="match" aria-labelledby="match-title">
+      <section class="section section-live-featured section-first" id="live" aria-labelledby="live-title">
+        <div class="section-inner live-featured-layout">
+          <div class="live-featured-copy">
+            <p class="stamp stamp-red">LIVE STREAM</p>
+            <p class="live-featured-channel">GENGEN × エンター豊田 同時生配信</p>
+            <h2 id="live-title"><span>ただいま</span><span>生配信中！</span></h2>
+            <p class="live-featured-lead">
+              GENGENはTikTok、エンター豊田はYouTubeで配信中。<br />
+              見たい配信を選んで、応援コメントや投げ銭でチャリティーマッチを一緒に盛り上げてください！
+            </p>
+            <div class="live-watch-actions" aria-label="ライブ配信リンク">
+              <a
+                class="primary-button live-watch-button live-watch-button-red"
+                href="https://www.tiktok.com/@gengen.ch/live?enter_from_merge=others_homepage&amp;enter_method=others_photo"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <small>GENGEN</small>
+                TikTok LIVEを見る
+              </a>
+              <a
+                class="primary-button live-watch-button live-watch-button-blue"
+                href="https://www.youtube.com/watch?v=hR_1zci05E4"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <small>エンター豊田</small>
+                YouTube LIVEを見る
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-match" id="match" aria-labelledby="match-title">
         <div class="section-inner match-layout">
           <div class="match-poster">
             <img src="./img/match.jpg" alt="GENGEN 対 エンター豊田 生配信対決決定" loading="eager">
@@ -242,29 +276,6 @@ YouTubeでの発信やイベント出演を通じて、
 
           <div class="short-video" aria-label="予告ショート動画">
 <iframe width="487" height="866" src="https://www.youtube.com/embed/cM5zhiTUEHg" title="GENGEN VS エンター豊田 チャリティーマッチ予告動画" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-          </div>
-        </div>
-      </section>
-
-      <section class="section section-live" id="live" aria-labelledby="live-title">
-        <div class="section-inner live-strip">
-          <p class="stamp stamp-red">生配信情報</p>
-          <div>
-            <h2 id="live-title">本番は生配信で</h2>
-            <p>
-              本番ではチャリティ対決の模様に加えて、事前応援投票の集計も紹介予定です。配信URLが決まり次第、こちらでお知らせします。
-            </p>
-          </div>
-          <div class="live-actions" aria-label="配信URL">
-            <!-- URL決定後は href を差し替えて、is-disabled / aria-disabled / tabindex を削除 -->
-            <a class="secondary-button live-url-button live-url-button-red is-disabled" href="#" aria-disabled="true" tabindex="-1">
-              <span>GENGEN 配信URL</span>
-              <strong>準備中</strong>
-            </a>
-            <a class="secondary-button live-url-button live-url-button-blue is-disabled" href="#" aria-disabled="true" tabindex="-1">
-              <span>エンター豊田 配信URL</span>
-              <strong>準備中</strong>
-            </a>
           </div>
         </div>
       </section>
