@@ -1156,6 +1156,131 @@ button {
   transition: width 360ms ease;
 }
 
+.final-vote-result {
+  display: grid;
+  gap: 1.15rem;
+  margin: 0 0 2.2rem;
+  padding: clamp(1.15rem, 2.8vw, 2rem);
+  border: 5px solid var(--paper);
+  background:
+    linear-gradient(125deg, rgba(239, 43, 36, 0.16), transparent 42%),
+    linear-gradient(235deg, rgba(18, 200, 255, 0.15), transparent 42%),
+    rgba(5, 5, 5, 0.92);
+  box-shadow:
+    9px 9px 0 rgba(239, 43, 36, 0.42),
+    -9px -9px 0 rgba(18, 200, 255, 0.28);
+}
+
+.final-vote-result[hidden] {
+  display: none;
+}
+
+.final-vote-result-kicker,
+.final-vote-result h3,
+.final-vote-team p {
+  margin: 0;
+}
+
+.final-vote-result-kicker {
+  color: #ffef5c;
+  font-family: var(--jp-heavy-font);
+  font-size: clamp(0.9rem, 1.3vw, 1.05rem);
+  font-weight: 900;
+}
+
+.final-vote-result h3 {
+  color: var(--paper);
+  font-family: var(--jp-heavy-font);
+  font-size: clamp(1.8rem, 4vw, 3.35rem);
+  font-weight: 900;
+  line-height: 1.15;
+}
+
+.final-vote-result h3 small {
+  display: inline-block;
+  font-size: clamp(0.9rem, 1.8vw, 1.35rem);
+  white-space: nowrap;
+}
+
+.final-vote-score {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.final-vote-team {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.15rem 0.8rem;
+  align-items: end;
+  padding: 0.95rem 1rem;
+  border: 3px solid currentColor;
+  background: rgba(5, 5, 5, 0.78);
+}
+
+.final-vote-team-red {
+  color: var(--red);
+}
+
+.final-vote-team-blue {
+  color: var(--cyan);
+}
+
+.final-vote-team-name {
+  grid-column: 1 / -1;
+  color: var(--paper);
+  font-family: var(--jp-heavy-font);
+  font-size: clamp(1rem, 2vw, 1.35rem);
+  font-weight: 900;
+}
+
+.final-vote-team-count,
+.final-vote-team-percentage {
+  font-family: Impact, "Arial Black", system-ui, sans-serif;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.final-vote-team-count {
+  font-size: clamp(2rem, 5vw, 3.6rem);
+}
+
+.final-vote-team-percentage {
+  font-size: clamp(1.35rem, 3vw, 2.25rem);
+  text-align: right;
+}
+
+.final-vote-team-count small,
+.final-vote-team-percentage small {
+  margin-left: 0.18rem;
+  font-family: var(--jp-heavy-font);
+  font-size: 0.78rem;
+}
+
+.final-vote-bar {
+  display: flex;
+  height: clamp(1.4rem, 3vw, 2rem);
+  border: 3px solid var(--paper);
+  background: rgba(242, 238, 229, 0.15);
+  overflow: hidden;
+}
+
+.final-vote-bar span {
+  display: block;
+  height: 100%;
+  transition: width 360ms ease;
+}
+
+.final-vote-bar-red {
+  width: 50%;
+  background: var(--red);
+}
+
+.final-vote-bar-blue {
+  width: 50%;
+  background: var(--cyan);
+}
+
 .team-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1715,6 +1840,10 @@ button {
 
   .team-grid {
     gap: 1.55rem;
+  }
+
+  .final-vote-score {
+    grid-template-columns: 1fr;
   }
 
   .team-panel {

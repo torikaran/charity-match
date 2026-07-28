@@ -1,12 +1,18 @@
 const DEBUG_ALLOW_UNLIMITED_VOTES = false;
+const VOTING_CLOSED = true;
 
 const FORM_CONFIG = {
   actionUrl: "https://docs.google.com/forms/d/e/1FAIpQLSeTw6juBFX6O8Gj36nEBGT4qZr0umN68npEWk-_VunS1tfklw/formResponse",
   voteEntryId: "entry.1624209040",
 };
 
-const PUBLIC_VOTE_CSV_URL =
-  "https://docs.google.com/spreadsheets/d/19ysacW9BHIClnXLdcB1YG69bDibNl-B8rN6uZMNeER8/gviz/tq?tqx=out:csv&gid=758188382";
+const PUBLIC_VOTE_RESULTS_CSV_URL =
+  "https://docs.google.com/spreadsheets/d/19ysacW9BHIClnXLdcB1YG69bDibNl-B8rN6uZMNeER8/gviz/tq?" +
+  new URLSearchParams({
+    tqx: "out:csv",
+    gid: "700829485",
+    tq: "select B, count(B) where B is not null group by B label B 'label', count(B) 'count'",
+  }).toString();
 
 // プレゼント応募用Googleフォーム。
 // ローカルの ?mockSubmit=1 ではGoogleフォームへの送信をスキップして動作確認できる。
@@ -31,8 +37,14 @@ const JST_DATE_FORMATTER = new Intl.DateTimeFormat("en-CA", {
 
 const voteButtons = [...document.querySelectorAll(".vote-button")];
 const voteStatus = document.querySelector("#voteStatus");
-const supportTotal = document.querySelector("#supportTotal");
-const supportMeterFill = document.querySelector("#supportMeterFill");
+const finalVoteResult = document.querySelector("#finalVoteResult");
+const finalVoteTotal = document.querySelector("#finalVoteTotal");
+const gengenVoteCount = document.querySelector("#gengenVoteCount");
+const toyodaVoteCount = document.querySelector("#toyodaVoteCount");
+const gengenVotePercentage = document.querySelector("#gengenVotePercentage");
+const toyodaVotePercentage = document.querySelector("#toyodaVotePercentage");
+const gengenVoteBar = document.querySelector("#gengenVoteBar");
+const toyodaVoteBar = document.querySelector("#toyodaVoteBar");
 const modal = document.querySelector("#thanksModal");
 const modalStamp = document.querySelector("#modalStamp");
 const modalTitle = document.querySelector("#modalTitle");
@@ -55,7 +67,7 @@ function todayInJapan() {
 }
 
 function isPastDeadline() {
-  return Date.now() > DEADLINE.getTime();
+  return VOTING_CLOSED || Date.now() > DEADLINE.getTime();
 }
 
 function readLastVoteDate() {
@@ -152,53 +164,50 @@ function parseCsv(csv) {
   return rows;
 }
 
-function getMeterTarget(total) {
-  if (total >= 500) {
-    return 500;
+function formatPercentage(count, total) {
+  if (total <= 0) {
+    return "0";
   }
 
-  if (total >= 200) {
-    return 500;
-  }
-
-  if (total >= 50) {
-    return 200;
-  }
-
-  return 50;
+  return ((count / total) * 100).toFixed(1).replace(/\.0$/, "");
 }
 
-function updateSupportMeter(total) {
-  if (!supportTotal || !supportMeterFill) {
-    return;
+function updateFinalVoteResult(gengenCount, toyodaCount) {
+  const total = gengenCount + toyodaCount;
+  const gengenPercentageValue = total > 0 ? (gengenCount / total) * 100 : 50;
+  const toyodaPercentageValue = total > 0 ? (toyodaCount / total) * 100 : 50;
+
+  if (finalVoteTotal) finalVoteTotal.textContent = String(total);
+  if (gengenVoteCount) gengenVoteCount.textContent = String(gengenCount);
+  if (toyodaVoteCount) toyodaVoteCount.textContent = String(toyodaCount);
+  if (gengenVotePercentage) {
+    gengenVotePercentage.textContent = formatPercentage(gengenCount, total);
   }
-
-  const target = getMeterTarget(total);
-  const percentage = Math.min(100, Math.max(6, (total / target) * 100));
-
-  supportTotal.textContent = String(total);
-  supportMeterFill.style.width = `${percentage}%`;
+  if (toyodaVotePercentage) {
+    toyodaVotePercentage.textContent = formatPercentage(toyodaCount, total);
+  }
+  if (gengenVoteBar) gengenVoteBar.style.width = `${gengenPercentageValue}%`;
+  if (toyodaVoteBar) toyodaVoteBar.style.width = `${toyodaPercentageValue}%`;
 }
 
-async function refreshSupportMeter() {
-  if (!supportTotal || !supportMeterFill) {
-    return;
-  }
-
+async function refreshVoteResults() {
   try {
-    const response = await fetch(PUBLIC_VOTE_CSV_URL, { cache: "no-store" });
+    const response = await fetch(PUBLIC_VOTE_RESULTS_CSV_URL, { cache: "no-store" });
     if (!response.ok) {
       throw new Error("Failed to fetch vote CSV");
     }
 
     const rows = parseCsv(await response.text());
-    const total = Number(rows[1]?.[1] ?? 0);
+    const counts = new Map(rows.slice(1).map(([label, count]) => [label, Number(count)]));
+    const gengenCount = counts.get("児童養護施設チャリティ") ?? 0;
+    const toyodaCount = counts.get("犬猫チャリティ") ?? 0;
+    const total = gengenCount + toyodaCount;
 
-    if (!Number.isFinite(total)) {
+    if (![gengenCount, toyodaCount, total].every(Number.isFinite)) {
       throw new Error("Invalid vote count");
     }
 
-    updateSupportMeter(total);
+    updateFinalVoteResult(gengenCount, toyodaCount);
   } catch {
     /* Keep the previous meter value when Google Sheets is temporarily unavailable. */
   }
@@ -207,7 +216,10 @@ async function refreshSupportMeter() {
 function refreshVoteState() {
   if (isPastDeadline()) {
     setButtonsDisabled(true);
-    setStatus("事前応援投票の受付は終了しました。");
+    voteButtons.forEach((button) => {
+      button.textContent = "抽選応募は締め切りました";
+    });
+    if (finalVoteResult) finalVoteResult.hidden = false;
     return;
   }
 
@@ -426,7 +438,7 @@ async function handleVote(event) {
   try {
     await submitVote(submittedValue);
     writeLastVoteDate();
-    refreshSupportMeter();
+    refreshVoteResults();
     configureModal(button.dataset.visibleTeam);
     openModal();
   } catch {
@@ -457,4 +469,4 @@ window.addEventListener("keydown", (event) => {
 });
 
 refreshVoteState();
-refreshSupportMeter();
+refreshVoteResults();

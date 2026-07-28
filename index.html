@@ -17,7 +17,7 @@
     <meta property="og:locale" content="ja_JP">
     <meta name="twitter:card" content="summary_large_image">
     <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="./styles.css?v=20260727-live-winner">
+    <link rel="stylesheet" href="./styles.css?v=20260728-final-vote">
   </head>
   <body>
     <header class="site-header" id="top">
@@ -99,6 +99,33 @@ GENGENとエンター豊田によるチャリティーマッチの開催が決�
             </p>
           </div>
 
+          <section class="final-vote-result" id="finalVoteResult" aria-labelledby="finalVoteResultTitle" hidden>
+            <p class="final-vote-result-kicker">応援ありがとうございました！</p>
+            <h3 id="finalVoteResultTitle">
+              最終応援投票結果
+              <small>（総投票数<span id="finalVoteTotal">--</span>票）</small>
+            </h3>
+
+            <div class="final-vote-score">
+              <div class="final-vote-team final-vote-team-red">
+                <p class="final-vote-team-name">GENGEN</p>
+                <p class="final-vote-team-count"><span id="gengenVoteCount">--</span><small>票</small></p>
+                <p class="final-vote-team-percentage"><span id="gengenVotePercentage">--</span><small>％</small></p>
+              </div>
+
+              <div class="final-vote-team final-vote-team-blue">
+                <p class="final-vote-team-name">エンター豊田</p>
+                <p class="final-vote-team-count"><span id="toyodaVoteCount">--</span><small>票</small></p>
+                <p class="final-vote-team-percentage"><span id="toyodaVotePercentage">--</span><small>％</small></p>
+              </div>
+            </div>
+
+            <div class="final-vote-bar" aria-hidden="true">
+              <span class="final-vote-bar-red" id="gengenVoteBar"></span>
+              <span class="final-vote-bar-blue" id="toyodaVoteBar"></span>
+            </div>
+          </section>
+
           <aside class="winner-announcement" aria-label="クラブプレゼント当選発表">
             <p class="winner-announcement-kicker">クラブプレゼント</p>
             <p class="winner-announcement-title">当選者は生配信内で発表！</p>
@@ -106,18 +133,6 @@ GENGENとエンター豊田によるチャリティーマッチの開催が決�
               <time datetime="2026-07-28T12:30:00+09:00">7月28日12時30分頃</time>
             </p>
           </aside>
-
-          <p class="vote-alert" id="voteStatus" aria-live="polite"></p>
-
-          <div class="support-meter" aria-live="polite">
-            <div class="support-meter-head">
-              <p class="support-meter-label">現在の応援総数</p>
-              <p class="support-meter-count"><span id="supportTotal">--</span><small>票</small></p>
-            </div>
-            <div class="support-meter-bar" aria-hidden="true">
-              <span id="supportMeterFill"></span>
-            </div>
-          </div>
 
           <div class="team-grid">
             <article class="team-panel team-panel-red">
@@ -348,6 +363,6 @@ YouTubeでの発信やイベント出演を通じて、
       </div>
     </div>
 
-    <script src="./script.js?v=20260717-date"></script>
+    <script src="./script.js?v=20260728-final-vote"></script>
   </body>
 </html>
